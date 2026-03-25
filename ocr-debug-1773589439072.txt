@@ -1,0 +1,91 @@
+OCR DEBUG RAPPORT
+Gegenereerd: 2026-03-15T15:43:54.130Z
+
+============================================================
+GOOGLE VISION (ruwe OCR, letterlijk):
+============================================================
+Schrijf de zinnen over. Plaats aanhalingstekens, hoofdletters en leestekens waar nodig.
+1 de juffrouw zegt wie laatst lacht, lacht het best
+De juffrouw zegt: "We loast bucht, lacht hat best!"
+2 deze bloem is bijzonder zegt de clown
+"Deze bloem is bijzonder", zegt de clown.
+3 ga jij onmiddellijk slapen vraagt papa
+"Ga jij onmiddelijk slapen?", vraagt papa. P
+4 de man in het circus roept iedereen van harte welkom
+1)
+De
+man in het cicus roept :"
+Jedereen.
+van
+harte welkom!"
+Mama zegt,
+5 mama zegt soms ben jij een beetje eigenwijs
+Mama zegt: "Does " Soms ben zij
+een
+beetje eigensinys."
+Vul de tekst aan. Kies uit:
+terrein - omheining - domein - ontdekkingsreis - Frankrijk - verblijf - litteken - verroeste -
+bevrijden voorraad - bevrijdde - onmiddellijk
+drijfzand - verrassen
+Tijdens mijn ontdekkingreis
+Ons hotel stond op een groot
+domein
+verblijf in
+in Frankrijk
+Terrein
+beleefde ik een avontuur.
+Mijn ouders verboden me het
+te verlaten. 's Avonds had ik zin in een
+om uit mijn raam. Ik klauterde over de poort, maar haperde aan de
+gels van de.
+et me
+omheining
+verrassen
+Au! Dat wordt een.
+1 ontdekkingsreis
+• omheining verroeste
+litteken
+door alles wat op mijn pad kwam.
+- omdat het donker was, kon ik niet goed zien waar ik liep.
+.lk
+zat ik vast in
+difrand
+zakte ik tot mijn middel weg.
+Onmiddelijo bevrijden.
+eerde mezelf te
+ik hier de hele nacht moest blijven?
+een voorraad
+delaar hoorde mij en
+HOTEL DU VILL
+maar dat lukte niet.
+eten mee. Ik riep zo hard ik kon.
+bevrydde
+mij.
+te de man en liep snel naar het hotel terug. Wat een avontuur!
+ท
+
+============================================================
+CLAUDE VISION (geparsed JSON):
+============================================================
+[
+  {
+    "expected": "de juffrouw zegt wie laat lacht lacht het best",
+    "actual": "De juffrouw zegt: \"Wie laat lacht, lacht het best\""
+  },
+  {
+    "expected": "deze bloem is bijzonder zegt de clown",
+    "actual": "\"Deze bloem is bijzonder\", zegt de clown."
+  },
+  {
+    "expected": "ga jij onmiddellijk slapen vraagt papa",
+    "actual": "\"Ga jij onmiddellijk slapen?\", vraagt papa"
+  },
+  {
+    "expected": "de man in het circus roept iedereen van harte welkom",
+    "actual": "De man in het circus roept: \"Iedereen van harte welkom!\""
+  },
+  {
+    "expected": "mama zegt soms ben jij een beetje eigenwijs",
+    "actual": "Mama zegt, Mama zegt: \"Soms ben jij een beetje eigenwijs.\""
+  }
+]
