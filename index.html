@@ -93,32 +93,67 @@
     .spinner { border: 4px solid rgba(0,0,0,0.1); width: 36px; height: 36px; border-radius: 50%; border-left-color: var(--primary); animation: spin 1s linear infinite; display: inline-block; }
     .spinner-small { border: 3px solid rgba(0,0,0,0.1); width: 16px; height: 16px; border-radius: 50%; border-left-color: var(--primary); animation: spin 1s linear infinite; display: inline-block; vertical-align: middle; margin-left: 8px; }
 
-    /* Flashcard */
-    .flashcard { width:100%; height:100%; position:relative; transition:transform 0.6s; transform-style:preserve-3d; cursor:pointer; }
-    .flashcard.flipped { transform:rotateY(180deg); }
-    .flashcard-face { position:absolute; width:100%; height:100%; backface-visibility:hidden; border-radius:var(--border-radius-card); display:flex; flex-direction:column; justify-content:center; align-items:center; padding:24px; text-align:center; box-shadow:var(--shadow-soft); }
-    .flashcard-front { background:white; border:2px solid var(--primary); }
-    .flashcard-back { background:linear-gradient(135deg, var(--primary), var(--primary-dark)); color:white; transform:rotateY(180deg); }
-    
+    /* Progress dots */
     .dot { width:10px; height:10px; border-radius:50%; background:#dcdde1; cursor:pointer; }
     .dot.active { background:var(--primary); transform:scale(1.2); }
     .dot.correct { background:var(--success); }
     .dot.wrong { background:#ff7675; }
 
-    /* Open Vraag Weergave */
-    .open-question-card { background:white; border-radius:var(--border-radius-card); padding:24px; box-shadow:var(--shadow-soft); display:flex; flex-direction:column; height:100%; }
-    .oq-label { font-size:12px; font-weight:bold; color:var(--primary); text-transform:uppercase; margin-bottom:12px; }
-    .oq-question { font-size:20px; font-weight:bold; margin-bottom:20px; }
-    .oq-answer-area { display:flex; gap:12px; margin-bottom:16px; flex:1; }
-    .oq-answer-area textarea { flex:1; border:2px solid #E2E8F0; border-radius:12px; padding:12px; font-family:inherit; font-size:16px; resize:none; }
-    .mic-btn { background:linear-gradient(135deg, #ff7675, #d63031); color:white; border:none; border-radius:12px; width:64px; display:flex; align-items:center; justify-content:center; font-size:24px; cursor:pointer; box-shadow:0 4px 10px rgba(214,48,49,0.3); }
-    .check-answer-btn { background:linear-gradient(135deg, var(--success), var(--success-dark)); color:white; border:none; border-radius:12px; padding:16px; font-weight:bold; font-size:18px; cursor:pointer; width:100%; }
-    .oq-feedback { margin-top:16px; padding:16px; border-radius:12px; background:#F0F0FF; display:none; border:2px solid var(--success); }
+    /* Question Card */
+    .question-card { background:white; border-radius:var(--border-radius-card); padding:24px; box-shadow:var(--shadow-soft); display:flex; flex-direction:column; }
+    .q-label { font-size:12px; font-weight:bold; color:var(--primary); text-transform:uppercase; margin-bottom:12px; }
+    .q-text { font-size:20px; font-weight:bold; margin-bottom:20px; }
 
-    /* Modals (Settings) */
-    .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); backdrop-filter:blur(5px); z-index:200; align-items:center; justify-content:center; }
-    .modal-overlay.active { display:flex; }
-    .modal-card { background:white; border-radius:var(--border-radius-card); padding:24px; width:90%; max-width:400px; box-shadow:var(--shadow-soft); }
+    /* MC Options */
+    .mc-options { display:flex; flex-direction:column; gap:12px; }
+    .mc-option { background:#F0F0FF; border:2px solid #E2E8F0; border-radius:12px; padding:14px 16px; font-family:inherit; font-size:16px; font-weight:600; cursor:pointer; text-align:left; display:flex; align-items:center; gap:12px; transition:all 0.2s; }
+    .mc-option:active { transform:scale(0.98); }
+    .mc-option .mc-letter { background:var(--primary); color:white; width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:14px; flex-shrink:0; }
+    .mc-option.selected { border-color:var(--primary); background:#E8E4FF; }
+    .mc-option.correct { border-color:var(--success); background:#E6FFF5; }
+    .mc-option.correct .mc-letter { background:var(--success); }
+    .mc-option.incorrect { border-color:#ff7675; background:#FFF0F0; }
+    .mc-option.incorrect .mc-letter { background:#ff7675; }
+    .mc-option.disabled { pointer-events:none; opacity:0.7; }
+    .mc-option.disabled.correct { opacity:1; }
+
+    /* Open Question */
+    .open-answer-area { display:flex; gap:12px; margin-bottom:16px; }
+    .open-answer-area textarea { flex:1; border:2px solid #E2E8F0; border-radius:12px; padding:12px; font-family:inherit; font-size:16px; resize:none; min-height:80px; }
+    .check-answer-btn { background:linear-gradient(135deg, var(--success), var(--success-dark)); color:white; border:none; border-radius:12px; padding:16px; font-weight:bold; font-size:18px; cursor:pointer; width:100%; font-family:inherit; }
+    .check-answer-btn:disabled { opacity:0.5; cursor:not-allowed; }
+
+    /* Feedback */
+    .q-feedback { margin-top:16px; padding:16px; border-radius:12px; background:#F0F0FF; border:2px solid var(--success); }
+    .q-feedback.incorrect { border-color:#ff7675; background:#FFF5F5; }
+    .q-feedback.partial { border-color:#FDCB6E; background:#FFFBF0; }
+    .q-next-btn { margin-top:16px; }
+
+    /* Input with mic */
+    .input-with-mic { display:flex; gap:8px; align-items:stretch; }
+    .input-with-mic input, .input-with-mic textarea { flex:1; border:2px solid #E2E8F0; border-radius:12px; padding:14px; font-family:inherit; font-size:16px; }
+    .input-with-mic textarea { resize:none; min-height:70px; }
+    .mic-btn { background:linear-gradient(135deg, #ff7675, #d63031); color:white; border:none; border-radius:12px; width:52px; display:flex; align-items:center; justify-content:center; font-size:22px; cursor:pointer; box-shadow:0 4px 10px rgba(214,48,49,0.3); flex-shrink:0; transition:all 0.2s; }
+    .mic-btn.recording { animation:pulse 1.5s infinite; }
+    .mic-btn.mic-hidden { display:none; }
+
+    /* Score Summary */
+    .score-circle { width:140px; height:140px; border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center; margin:0 auto 24px; font-size:36px; font-weight:800; font-family:'Quicksand',sans-serif; }
+    .score-circle.great { background:linear-gradient(135deg,#00B894,#00CEC9); color:white; }
+    .score-circle.okay { background:linear-gradient(135deg,#FDCB6E,#E17055); color:white; }
+    .score-circle.needs-work { background:linear-gradient(135deg,#ff7675,#d63031); color:white; }
+    .score-label { font-size:14px; font-weight:600; opacity:0.9; }
+
+    /* Context Screen */
+    .context-field { margin-bottom:20px; }
+    .context-field label { display:block; font-weight:bold; margin-bottom:8px; font-size:16px; }
+
+    /* Thinking Loader */
+    @keyframes bounce { 0%,80%,100%{transform:scale(0)} 40%{transform:scale(1)} }
+    .thinking-dots { display:flex; gap:8px; justify-content:center; margin:24px 0; }
+    .thinking-dots span { width:16px; height:16px; border-radius:50%; background:var(--primary); animation:bounce 1.4s infinite ease-in-out both; }
+    .thinking-dots span:nth-child(1) { animation-delay:-0.32s; }
+    .thinking-dots span:nth-child(2) { animation-delay:-0.16s; }
 
     /* Huiswerk Cards */
     .hw-card { background:white; border-radius:16px; padding:20px; margin-bottom:16px; box-shadow:var(--shadow-soft); border-left:4px solid transparent; }
@@ -220,86 +255,86 @@
     </div>
   </div>
 
-  <!-- Scherm 4: Verwerking (OCR) -->
+  <!-- Scherm: Verwerking (child-friendly loader) -->
   <div id="screen-processing" class="screen" style="align-items: center; justify-content: center; text-align: center;">
-    <div class="spinner" style="width: 64px; height: 64px; border-width: 6px; margin-bottom: 32px;"></div>
-    <h2 style="margin-bottom: 32px;">Even geduld...</h2>
-    
-    <div style="text-align: left; background: white; padding: 24px; border-radius: 20px; width: 100%; max-width: 400px; box-shadow: var(--shadow-soft);">
-      <div id="proc-step-1" style="font-size: 18px; font-weight: bold; margin-bottom: 16px; color: var(--text-main);">
-        ⏳ Wachten op foto's...
-      </div>
-      <div id="proc-step-2" style="font-size: 18px; font-weight: bold; color: var(--text-light);">
-        ⏳ Tekst herkennen...
-      </div>
-    </div>
+    <div style="font-size: 64px; margin-bottom: 16px;">🤔</div>
+    <h2 style="margin-bottom: 8px;">Even denken...</h2>
+    <p style="color: var(--text-light); margin-bottom: 8px;">Ik lees je foto's!</p>
+    <div class="thinking-dots"><span></span><span></span><span></span></div>
+    <p id="processing-detail" style="color: var(--text-light); font-size: 14px; margin-top: 16px;"></p>
   </div>
 
-  <!-- Scherm 4.5: Tekst Review -->
-  <div id="screen-review" class="screen">
+  <!-- Scherm: Context gathering (Oefenvragen) -->
+  <div id="screen-context" class="screen">
     <div class="top-bar">
       <button class="icon-btn" onclick="navigateTo('screen-upload', 'back')">←</button>
-      <div class="top-bar-title">Tekst Controleren</div>
+      <div class="top-bar-title">📚 Over je toets</div>
       <div style="width: 48px;"></div>
     </div>
-    
-    <p style="margin-bottom: 12px; font-weight: bold;">Controleer of de tekst klopt. Je mag aanpassen.</p>
-    
-    <textarea id="reviewTextarea" oninput="updateCharCount()" style="flex: 1; width: 100%; border: 2px solid #E2E8F0; border-radius: 12px; padding: 16px; font-family: inherit; font-size: 16px; resize: none; margin-bottom: 8px;" placeholder="Herkende tekst verschijnt hier..."></textarea>
-    
-    <div style="text-align: right; font-size: 12px; color: var(--text-light); margin-bottom: 16px;">
-      <span id="charCount">0</span> karakters
+
+    <div style="flex:1; display:flex; flex-direction:column; justify-content:center;">
+      <div class="context-field">
+        <label>📖 Welk vak?</label>
+        <div class="input-with-mic">
+          <input type="text" id="inputVak" placeholder="bv. Wiskunde, Frans, Wereldoriëntatie..." oninput="updateContextBtn()">
+          <button class="mic-btn" onclick="openSpeechModal('inputVak')" id="micVak">🎤</button>
+        </div>
+      </div>
+
+      <div class="context-field">
+        <label>🎯 Wat moet je kunnen voor de toets?</label>
+        <div class="input-with-mic">
+          <textarea id="inputLeerdoel" rows="3" placeholder="bv. De tafels van 6, 7 en 8 kennen / De provincies van België kunnen aanduiden / Franse woordjes hoofdstuk 3"></textarea>
+          <button class="mic-btn" onclick="openSpeechModal('inputLeerdoel')" id="micLeerdoel">🎤</button>
+        </div>
+        <p style="font-size:13px; color:var(--text-light); margin-top:6px;">Optioneel, maar helpt betere vragen te maken!</p>
+      </div>
     </div>
-    
-    <div id="subject-container" style="margin-bottom: 24px;">
-      <label style="display:block; font-weight:bold; margin-bottom:8px;">📚 Vak (optioneel)</label>
-      <input type="text" id="inputSubject" placeholder="bv. Aardrijkskunde" style="width: 100%; padding: 16px; border-radius: 12px; border: 2px solid #E2E8F0; font-family: inherit; font-size: 16px;">
-    </div>
-    
-    <div style="display: flex; gap: 12px; padding-bottom: calc(16px + env(safe-area-inset-bottom));">
-      <button class="btn btn-secondary" onclick="navigateTo('screen-upload', 'back')" style="flex: 1;">
-        ← Opnieuw
-      </button>
-      <button class="btn btn-success" onclick="startAIProcessing()" style="flex: 2; font-size: 20px;">
-        ✨ Start!
-      </button>
-    </div>
+
+    <button id="startQuestionsBtn" class="btn btn-primary" onclick="startQuestions()" disabled style="font-size:20px; padding-bottom:calc(16px + env(safe-area-inset-bottom));">
+      Start oefenvragen! 🚀
+    </button>
   </div>
 
-  <!-- Scherm AI Loading -->
+  <!-- Scherm: AI Loading -->
   <div id="screen-ai-loading" class="screen" style="align-items: center; justify-content: center; text-align: center;">
-    <div class="spinner" style="width: 64px; height: 64px; border-width: 6px; margin-bottom: 32px; border-left-color: var(--success);"></div>
-    <h2 id="ai-loading-title" style="margin-bottom: 16px;">🧠 Vragen worden gemaakt...</h2>
-    <p style="color: var(--text-light);">Dit duurt meestal een paar seconden.</p>
+    <div style="font-size: 64px; margin-bottom: 16px;">🧠</div>
+    <h2 id="ai-loading-title" style="margin-bottom: 8px;">Vragen worden gemaakt...</h2>
+    <p style="color: var(--text-light); margin-bottom: 8px;">Dit duurt meestal een paar seconden.</p>
+    <div class="thinking-dots"><span></span><span></span><span></span></div>
   </div>
 
-  <!-- Scherm 5A: Oefenvragen (Flashcards) -->
+  <!-- Scherm: Practice (MC + Open, one at a time) -->
   <div id="screen-practice" class="screen">
     <div class="top-bar">
       <button class="icon-btn" onclick="navigateTo('screen-mode', 'back')">🏠</button>
-      <div id="quiz-score-badge" style="background:#f0f0ff; color:var(--primary); font-weight:700; padding:6px 12px; border-radius:20px; font-size: 14px;">0/10 goed</div>
+      <div id="quiz-progress-text" style="background:#f0f0ff; color:var(--primary); font-weight:700; padding:6px 12px; border-radius:20px; font-size:14px;">Vraag 1/10</div>
     </div>
-    
-    <!-- Flashcard container -->
-    <div id="flashcard-container" style="flex:1; display:flex; flex-direction:column; justify-content:center; perspective:1000px; margin-bottom:24px;">
-      <!-- Wordt via JS ingevuld -->
+
+    <!-- Question container -->
+    <div id="question-container" style="flex:1; overflow-y:auto; padding-bottom:16px;">
+      <!-- Filled by JS -->
     </div>
-    
-    <!-- Navigation dots -->
-    <div id="quiz-progress-dots" style="display:flex; justify-content:center; gap:8px; margin-bottom:24px; flex-wrap:wrap;"></div>
-    
-    <!-- Quiz controls -->
-    <div id="quiz-controls" style="display:flex; justify-content:space-between; align-items:center; padding-bottom:calc(16px + env(safe-area-inset-bottom));">
-      <button class="icon-btn" onclick="prevQuestion()" style="background:#f0f0ff; border-radius:12px;">◀</button>
-      <div style="display:flex; gap:12px;">
-         <button class="btn btn-outline" onclick="answerQuestion(false)" style="width:100px; padding:12px; color:#ff7675; border-color:#ff7675;">✗ Fout</button>
-         <button class="btn btn-success" onclick="answerQuestion(true)" style="width:100px; padding:12px;">✓ Goed</button>
-      </div>
-      <button class="icon-btn" onclick="nextQuestion()" style="background:#f0f0ff; border-radius:12px;">▶</button>
-    </div>
+
+    <!-- Progress dots -->
+    <div id="quiz-progress-dots" style="display:flex; justify-content:center; gap:8px; margin-bottom:16px; flex-wrap:wrap; padding-bottom:calc(8px + env(safe-area-inset-bottom));"></div>
   </div>
 
-  <!-- Scherm 5B: Huiswerk Feedback -->
+  <!-- Scherm: Score Summary -->
+  <div id="screen-score" class="screen" style="align-items:center; justify-content:center; text-align:center;">
+    <div class="spacer"></div>
+    <div id="score-emoji" style="font-size:64px; margin-bottom:16px;">🎉</div>
+    <h2 style="margin-bottom:24px;">Quiz klaar!</h2>
+    <div id="score-circle" class="score-circle great">
+      <span id="score-number">7/10</span>
+      <span class="score-label">goed</span>
+    </div>
+    <p id="score-message" style="font-size:18px; color:var(--text-light); margin-bottom:32px;">Goed gedaan! 💪</p>
+    <button class="btn btn-primary" onclick="navigateTo('screen-mode', 'back')" style="max-width:300px;">🏠 Terug naar start</button>
+    <div class="spacer"></div>
+  </div>
+
+  <!-- Scherm: Huiswerk Feedback -->
   <div id="screen-homework" class="screen">
     <div class="top-bar" style="margin-bottom: 12px;">
       <button class="icon-btn" onclick="navigateTo('screen-mode', 'back')">🏠</button>
@@ -308,7 +343,7 @@
     </div>
     
     <div id="homework-cards-container" style="flex:1; overflow-y:auto; padding-bottom:24px;">
-      <!-- Wordt via JS ingevuld -->
+      <!-- Filled by JS -->
     </div>
     
     <div style="padding-bottom:calc(16px + env(safe-area-inset-bottom));">
@@ -334,19 +369,32 @@
   <script>
     const STATE = {
       lang: localStorage.getItem('sb_lang') || null,
-      model: 'claude-haiku-4-5-20251001', // Vastgezet na deployment
+      model: 'claude-haiku-4-5-20251001',
       questionCount: 10,
       mode: null,
       photos: [],
       ocrText: '',
+      vak: '',
+      leerdoel: '',
       questions: null,
-      homeworkFeedback: null
+      currentQuestionIndex: 0,
+      score: null,
+      homeworkFeedback: null,
+      recognition: null,
+      speechTargetId: null
     };
+
+    // Check Speech API availability
+    const hasSpeechAPI = !!(window.SpeechRecognition || window.webkitSpeechRecognition);
 
     function init() {
       if (STATE.lang) {
         document.getElementById('screen-language').classList.remove('active');
         document.getElementById('screen-mode').classList.add('active');
+      }
+      // Hide mic buttons if Speech API unavailable
+      if (!hasSpeechAPI) {
+        document.querySelectorAll('.mic-btn').forEach(b => b.classList.add('mic-hidden'));
       }
     }
 
@@ -389,16 +437,15 @@
       navigateTo('screen-upload', 'forward');
     }
 
-    // Camera & Photos Logic
+    // ---------------------------------------------------------------- //
+    // CAMERA & PHOTOS
+    // ---------------------------------------------------------------- //
     function handlePhotoUpload(event) {
       const files = event.target.files;
       if (!files || files.length === 0) return;
       
       Array.from(files).forEach(file => {
-        // Use object URL for immediate display
         const objectUrl = URL.createObjectURL(file);
-        
-        // Also read as Base64 for OCR processing
         const reader = new FileReader();
         reader.onload = (e) => {
           STATE.photos.push({
@@ -427,34 +474,15 @@
         
         STATE.photos.forEach(photo => {
           const div = document.createElement('div');
-          div.style.position = 'relative';
-          div.style.aspectRatio = '1/1';
-          div.style.borderRadius = '12px';
-          div.style.overflow = 'hidden';
-          div.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
+          div.style.cssText = 'position:relative; aspect-ratio:1/1; border-radius:12px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.1);';
           
           const img = document.createElement('img');
           img.src = photo.displayUrl;
-          img.style.width = '100%';
-          img.style.height = '100%';
-          img.style.objectFit = 'cover';
+          img.style.cssText = 'width:100%; height:100%; object-fit:cover;';
           
           const rmBtn = document.createElement('button');
           rmBtn.innerHTML = '✕';
-          rmBtn.style.position = 'absolute';
-          rmBtn.style.top = '4px';
-          rmBtn.style.right = '4px';
-          rmBtn.style.background = 'rgba(255,255,255,0.9)';
-          rmBtn.style.border = 'none';
-          rmBtn.style.borderRadius = '50%';
-          rmBtn.style.width = '24px';
-          rmBtn.style.height = '24px';
-          rmBtn.style.cursor = 'pointer';
-          rmBtn.style.display = 'flex';
-          rmBtn.style.alignItems = 'center';
-          rmBtn.style.justifyContent = 'center';
-          rmBtn.style.fontSize = '12px';
-          rmBtn.style.fontWeight = 'bold';
+          rmBtn.style.cssText = 'position:absolute; top:4px; right:4px; background:rgba(255,255,255,0.9); border:none; border-radius:50%; width:24px; height:24px; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:bold;';
           rmBtn.onclick = () => removePhoto(photo.id);
           
           div.appendChild(img);
@@ -470,108 +498,108 @@
       STATE.photos = STATE.photos.filter(p => p.id !== id);
       renderThumbnails();
     }
-    
+
+    // ---------------------------------------------------------------- //
+    // OCR
+    // ---------------------------------------------------------------- //
     async function runAzureOCR(fileBlob) {
       const workerUrl = 'https://shrill-rain-d2festudybuddy-ocr.djrien.workers.dev';
-      
-      const response = await fetch(workerUrl, {
-        method: 'POST',
-        body: fileBlob
-      });
-      
-      if (!response.ok) {
-        throw new Error('OCR Worker Error: ' + response.statusText);
-      }
-      
+      const response = await fetch(workerUrl, { method: 'POST', body: fileBlob });
+      if (!response.ok) throw new Error('OCR Worker Error: ' + response.statusText);
       const extractedText = await response.text();
       return extractedText.trim();
     }
 
     async function processPhotos() {
-        if(STATE.photos.length === 0) return;
-        
-        navigateTo('screen-processing');
-        
-        const step1 = document.getElementById('proc-step-1');
-        const step2 = document.getElementById('proc-step-2');
-        
-        step1.innerHTML = '📷 Foto\'s worden gelezen... <span class="spinner-small"></span>';
-        step1.style.color = 'var(--text-main)';
-        step2.innerHTML = '⏳ Tekst herkennen...';
-        step2.style.color = 'var(--text-light)';
-        
-        let combinedText = '';
-        
-        try {
-          for (let i = 0; i < STATE.photos.length; i++) {
-            if (STATE.photos.length > 1) {
-              step1.innerHTML = `📷 Foto ${i+1}/${STATE.photos.length} wordt gelezen... <span class="spinner-small"></span>`;
-            }
-            const text = await runAzureOCR(STATE.photos[i].file);
-            combinedText += text + '\n\n';
-          }
-          
-          step1.innerHTML = '✅ Foto\'s gelezen!';
-          step1.style.color = 'var(--success)';
-          
-          step2.innerHTML = '🔍 Tekst wordt herkend... <span class="spinner-small"></span>';
-          step2.style.color = 'var(--text-main)';
-          
-          // Simuleer een kleine delay voor UI flow
-          await new Promise(r => setTimeout(r, 600));
-          
-          step2.innerHTML = '✅ Tekst herkend!';
-          step2.style.color = 'var(--success)';
-          
-          STATE.ocrText = combinedText.trim();
-          
-          // Ga naar review scherm
-          setTimeout(() => {
-            document.getElementById('reviewTextarea').value = STATE.ocrText;
-            updateCharCount();
-            document.getElementById('subject-container').style.display = STATE.mode === 'toets' ? 'block' : 'none';
-            document.getElementById('inputSubject').value = '';
-            navigateTo('screen-review');
-          }, 800);
-          
-        } catch (e) {
-          alert("Er ging iets mis bij de Azure OCR: " + e.message + "\nControleer de netwerkverbinding of API key.");
-          navigateTo('screen-upload', 'back');
+      if (STATE.photos.length === 0) return;
+      
+      navigateTo('screen-processing');
+      const detail = document.getElementById('processing-detail');
+      let combinedText = '';
+      
+      try {
+        for (let i = 0; i < STATE.photos.length; i++) {
+          detail.textContent = STATE.photos.length > 1 
+            ? `Foto ${i + 1} van ${STATE.photos.length} wordt gelezen...` 
+            : 'Foto wordt gelezen...';
+          const text = await runAzureOCR(STATE.photos[i].file);
+          combinedText += text + '\n\n';
         }
+        
+        STATE.ocrText = combinedText.trim();
+        detail.textContent = 'Klaar! ✅';
+        
+        await new Promise(r => setTimeout(r, 600));
+        
+        if (STATE.mode === 'toets') {
+          // Go to context screen for vak + leerdoel
+          document.getElementById('inputVak').value = '';
+          document.getElementById('inputLeerdoel').value = '';
+          updateContextBtn();
+          navigateTo('screen-context');
+        } else {
+          // Huiswerk: go directly to AI processing
+          document.getElementById('ai-loading-title').innerText = 'Huiswerk wordt nagekeken...';
+          navigateTo('screen-ai-loading');
+          callClaudeAPI();
+        }
+      } catch (e) {
+        alert("Oeps, er ging iets mis bij het lezen van je foto's. Probeer opnieuw! 😅");
+        navigateTo('screen-upload', 'back');
+      }
     }
-    
-    function updateCharCount() {
-      const text = document.getElementById('reviewTextarea').value;
-      document.getElementById('charCount').innerText = text.length;
+
+    // ---------------------------------------------------------------- //
+    // CONTEXT SCREEN
+    // ---------------------------------------------------------------- //
+    function updateContextBtn() {
+      const vak = document.getElementById('inputVak').value.trim();
+      document.getElementById('startQuestionsBtn').disabled = vak.length === 0;
     }
-    
-    function startAIProcessing() {
-      STATE.ocrText = document.getElementById('reviewTextarea').value;
-      const subject = document.getElementById('inputSubject').value.trim();
-      STATE.subject = subject || "niet opgegeven";
+
+    function startQuestions() {
+      STATE.vak = document.getElementById('inputVak').value.trim();
+      STATE.leerdoel = document.getElementById('inputLeerdoel').value.trim();
       
-      document.getElementById('ai-loading-title').innerText = STATE.mode === 'toets' ? '🧠 Vragen worden gemaakt...' : '🧠 Huiswerk wordt nagekeken...';
+      document.getElementById('ai-loading-title').innerText = 'Vragen worden gemaakt...';
       navigateTo('screen-ai-loading');
-      
       callClaudeAPI();
     }
-    
+
+    // ---------------------------------------------------------------- //
+    // CLAUDE API
+    // ---------------------------------------------------------------- //
     async function callClaudeAPI() {
-      const systemPromptToets = `Je bent een ervaren leerkracht basisonderwijs in België met 20 jaar ervaring. Je bent gespecialiseerd in het opstellen van toetsen voor leerlingen van 10-12 jaar (5de en 6de leerjaar).
-## Jouw taak
-Lees de lestekst en maak een gevarieerde set oefenvragen die de leerling helpen de stof te studeren.
-## Vraagverdeling
-- 30% ONTHOUDEN: Wat is...?, Noem...
-- 40% BEGRIJPEN: Waarom...?, Leg uit...
-- 20% TOEPASSEN: Geef een voorbeeld...
-- 10% ANALYSEREN: Vergelijk...
-## Vraagtypes
-- Flashcard-vragen (korte vraag + kort antwoord)
-- Meerkeuzevragen (4 opties, A/B/C/D)
-- Open vragen (markeer met [OPEN] aan het begin!)
-## Output: ALLEEN een JSON array
-[{"q": "vraag", "a": "antwoord", "type": "flash|mc|open"}]
-Geef NOOIT markdown block quotes of begeleidende tekst, ENKEL de ruwe JSON array.`;
+      const systemPromptToets = `Je bent een vriendelijke leerkracht die oefenvragen maakt voor een leerling van 10-12 jaar in het Belgische basisonderwijs.
+
+Vak: ${STATE.vak}
+Leerdoel: ${STATE.leerdoel || 'niet opgegeven'}
+
+Hieronder staat de gefotografeerde leerstof (OCR-tekst):
+---
+${STATE.ocrText}
+---
+
+Genereer exact 10 oefenvragen als een JSON array. Maak een mix van meerkeuze ("mc") en open vragen ("open").
+
+Antwoord ENKEL met valid JSON in dit formaat, geen andere tekst:
+
+[
+  {
+    "type": "mc",
+    "question": "Wat is de hoofdstad van België?",
+    "options": ["Brussel", "Antwerpen", "Gent", "Luik"],
+    "correct": 0,
+    "explanation": "Brussel is de hoofdstad van België."
+  },
+  {
+    "type": "open",
+    "question": "Noem drie provincies in Vlaanderen.",
+    "answer": "Antwerpen, Limburg, Oost-Vlaanderen, West-Vlaanderen, Vlaams-Brabant",
+    "keywords": ["Antwerpen", "Limburg", "Oost-Vlaanderen", "West-Vlaanderen", "Vlaams-Brabant"],
+    "explanation": "Vlaanderen heeft 5 provincies. Drie daarvan noemen volstaat."
+  }
+]`;
 
       const systemPromptHuiswerk = `Je bent een ervaren leerkracht basisonderwijs in België. Een leerling van 10-12 jaar toont je zijn/haar huiswerk. Jouw taak is het huiswerk nakijken en constructieve feedback geven.
 ## Jouw aanpak
@@ -582,24 +610,14 @@ Geef NOOIT markdown block quotes of begeleidende tekst, ENKEL de ruwe JSON array
 [ { "opdracht": "de originele vraag/opdracht", "antwoord_leerling": "wat de leerling heeft geschreven", "status": "correct|bijna_correct|fout", "feedback": "korte vriendelijke feedback tekst", "correct_antwoord": "het juiste antwoord (alleen bij fout/bijna)" } ]
 Geef NOOIT markdown block quotes of begeleidende tekst, ENKEL de ruwe JSON array.`;
 
-      const userMessage = `Modus: ${STATE.mode}
-Vak: ${STATE.subject}
-Taal: ${STATE.lang}
-Aantal vragen: ${STATE.questionCount}
-
-Inhoud:
-"""
-${STATE.ocrText}
-"""
-
-${STATE.mode === 'toets' ? `Maak exact ${STATE.questionCount} oefenvragen op basis van UITSLUITEND bovenstaande tekst. Antwoord ALLEEN in JSON.` : `Kijk dit huiswerk na. Beoordeel elk antwoord. Antwoord ALLEEN in JSON.`}`;
+      const userMessage = STATE.mode === 'toets'
+        ? `Taal: ${STATE.lang}\n\nMaak exact ${STATE.questionCount} oefenvragen. Antwoord ALLEEN in JSON.`
+        : `Modus: huiswerk\nTaal: ${STATE.lang}\n\nInhoud:\n"""\n${STATE.ocrText}\n"""\n\nKijk dit huiswerk na. Beoordeel elk antwoord. Antwoord ALLEEN in JSON.`;
 
       try {
         const response = await fetch('https://royal-base-ec59studybuddy-claude.djrien.workers.dev', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             model: STATE.model,
             max_tokens: 4000,
@@ -616,18 +634,23 @@ ${STATE.mode === 'toets' ? `Maak exact ${STATE.questionCount} oefenvragen op bas
         const data = await response.json();
         let jsonStr = data.content[0].text.trim();
         
-        // Verwijder markdown json blocks indien het model zich daar toch aan vergreep
+        // Strip markdown code fences if present
         if (jsonStr.startsWith('```json')) jsonStr = jsonStr.substring(7);
         if (jsonStr.startsWith('```')) jsonStr = jsonStr.substring(3);
         if (jsonStr.endsWith('```')) jsonStr = jsonStr.substring(0, jsonStr.length - 3);
         
-        const resultItems = JSON.parse(jsonStr.trim());
+        let resultItems;
+        try {
+          resultItems = JSON.parse(jsonStr.trim());
+        } catch (parseErr) {
+          throw new Error('JSON parse failed');
+        }
         
         if (STATE.mode === 'toets') {
           STATE.questions = resultItems;
           STATE.currentQuestionIndex = 0;
-          STATE.score = { correct: 0, wrong: 0, answered: new Array(resultItems.length).fill(null) };
-          renderQuiz();
+          STATE.score = { correct: 0, total: resultItems.length, answered: new Array(resultItems.length).fill(null) };
+          renderQuestion();
           navigateTo('screen-practice');
         } else {
           STATE.homeworkFeedback = resultItems;
@@ -635,113 +658,231 @@ ${STATE.mode === 'toets' ? `Maak exact ${STATE.questionCount} oefenvragen op bas
           navigateTo('screen-homework');
         }
       } catch (e) {
-        alert("Fout bij AI verwerking: " + e.message);
-        navigateTo('screen-review', 'back');
+        alert("Oeps, er ging iets mis. Probeer opnieuw! 😅");
+        navigateTo('screen-mode', 'back');
       }
     }
 
     // ---------------------------------------------------------------- //
-    // QUIZ LOGICA
+    // QUIZ ENGINE (MC + OPEN)
     // ---------------------------------------------------------------- //
-    function renderQuiz() {
+    function renderQuestion() {
       const q = STATE.questions[STATE.currentQuestionIndex];
-      const container = document.getElementById('flashcard-container');
+      const container = document.getElementById('question-container');
+      const idx = STATE.currentQuestionIndex;
+      
+      document.getElementById('quiz-progress-text').innerText = `Vraag ${idx + 1}/${STATE.questions.length}`;
       
       let html = '';
-      if (q.type === 'open' || q.q.startsWith('[OPEN]')) {
-        let cleanQ = q.q.replace('[OPEN]', '').trim();
-        html = `
-        <div class="open-question-card">
-          <div class="oq-label">Open vraag ${STATE.currentQuestionIndex+1}/${STATE.questions.length}</div>
-          <p class="oq-question">${cleanQ}</p>
-          <div class="oq-answer-area">
-            <textarea id="openAnswerInput" placeholder="Typ je antwoord hier..."></textarea>
-            <button class="mic-btn" onclick="openSpeechModal()">🎤</button>
+      
+      if (q.type === 'mc') {
+        const letters = ['A', 'B', 'C', 'D'];
+        const answered = STATE.score.answered[idx];
+        
+        html = `<div class="question-card">
+          <div class="q-label">Meerkeuze · Vraag ${idx + 1}/${STATE.questions.length}</div>
+          <p class="q-text">${q.question}</p>
+          <div class="mc-options">`;
+        
+        q.options.forEach((opt, i) => {
+          let cls = 'mc-option';
+          if (answered !== null) {
+            cls += ' disabled';
+            if (i === q.correct) cls += ' correct';
+            if (answered === i && i !== q.correct) cls += ' incorrect';
+          }
+          html += `<button class="${cls}" onclick="selectMCAnswer(${i})">
+            <span class="mc-letter">${letters[i]}</span>
+            <span>${opt}</span>
+          </button>`;
+        });
+        
+        html += `</div>`;
+        
+        if (answered !== null) {
+          const isCorrect = answered === q.correct;
+          html += `<div class="q-feedback ${isCorrect ? '' : 'incorrect'}">
+            <strong>${isCorrect ? '✅ Correct!' : '❌ Helaas, dat is niet juist.'}</strong><br>
+            ${q.explanation || ''}
           </div>
-          <button id="checkOpenBtn" class="check-answer-btn" onclick="checkOpenAnswer()">✅ Controleer antwoord</button>
-          <div id="oqFeedback" class="oq-feedback">
-             <strong>💡 Modelantwoord:</strong><br>${q.a}
-          </div>
-        </div>`;
-      } else {
-        html = `
-        <div class="flashcard" onclick="this.classList.toggle('flipped')">
-          <div class="flashcard-face flashcard-front">
-            <div class="oq-label" style="position:absolute; top:24px; left:0; width:100%;">Vraag ${STATE.currentQuestionIndex+1}/${STATE.questions.length}</div>
-            <p style="font-size:22px; font-weight:bold; margin-top:24px;">${q.q.replace(/\\n/g, '<br>')}</p>
-            <p style="font-size:14px; color:#aaa; position:absolute; bottom:24px; width:100%; left:0;">Tik om te draaien</p>
-          </div>
-          <div class="flashcard-face flashcard-back">
-            <p style="font-size:20px; font-weight:bold;">${q.a.replace(/\\n/g, '<br>')}</p>
-            <p style="font-size:14px; opacity:0.8; position:absolute; bottom:24px; width:100%; left:0;">Tik om te sluiten</p>
-          </div>
-        </div>`;
-      }
-      container.innerHTML = html;
-      updateQuizProgress();
-    }
-    
-    function checkOpenAnswer() {
-      document.getElementById('checkOpenBtn').style.display = 'none';
-      document.getElementById('oqFeedback').style.display = 'block';
-    }
-
-    function answerQuestion(isCorrect) {
-      if (STATE.score.answered[STATE.currentQuestionIndex] === null) {
-        STATE.score.answered[STATE.currentQuestionIndex] = isCorrect;
-        if (isCorrect) STATE.score.correct++;
-        else STATE.score.wrong++;
-      } else {
-        // change answer
-        const oldAns = STATE.score.answered[STATE.currentQuestionIndex];
-        if (oldAns !== isCorrect) {
-          if (oldAns === true) STATE.score.correct--;
-          else STATE.score.wrong--;
-
-          if (isCorrect) STATE.score.correct++;
-          else STATE.score.wrong++;
-
-          STATE.score.answered[STATE.currentQuestionIndex] = isCorrect;
+          <button class="btn btn-primary q-next-btn" onclick="nextQuestion()">Volgende vraag →</button>`;
         }
+        
+        html += `</div>`;
+      } else {
+        // Open question
+        const answered = STATE.score.answered[idx];
+        
+        html = `<div class="question-card">
+          <div class="q-label">Open vraag · Vraag ${idx + 1}/${STATE.questions.length}</div>
+          <p class="q-text">${q.question}</p>`;
+        
+        if (answered === null) {
+          html += `<div class="open-answer-area">
+            <textarea id="openAnswerInput" placeholder="Typ je antwoord hier..."></textarea>
+            <button class="mic-btn ${hasSpeechAPI ? '' : 'mic-hidden'}" onclick="openSpeechModal('openAnswerInput')">🎤</button>
+          </div>
+          <button class="check-answer-btn" onclick="checkOpenAnswer()">Controleer antwoord ✓</button>`;
+        } else {
+          // Show previous feedback
+          const fb = STATE.openFeedback && STATE.openFeedback[idx];
+          if (fb) {
+            const fbClass = fb.result === 'correct' ? '' : fb.result === 'partially_correct' ? 'partial' : 'incorrect';
+            const emoji = fb.result === 'correct' ? '✅' : fb.result === 'partially_correct' ? '⚠️' : '❌';
+            html += `<div class="q-feedback ${fbClass}">
+              <strong>${emoji} ${fb.feedback}</strong><br><br>
+              <strong>💡 Correct antwoord:</strong> ${fb.correct_answer}
+            </div>`;
+          }
+          html += `<button class="btn btn-primary q-next-btn" onclick="nextQuestion()">Volgende vraag →</button>`;
+        }
+        
+        html += `</div>`;
       }
       
-      nextQuestion();
+      container.innerHTML = html;
+      updateProgressDots();
+    }
+
+    function selectMCAnswer(selectedIndex) {
+      const idx = STATE.currentQuestionIndex;
+      if (STATE.score.answered[idx] !== null) return;
+      
+      const q = STATE.questions[idx];
+      STATE.score.answered[idx] = selectedIndex;
+      if (selectedIndex === q.correct) STATE.score.correct++;
+      
+      renderQuestion();
+    }
+
+    async function checkOpenAnswer() {
+      const input = document.getElementById('openAnswerInput');
+      if (!input || !input.value.trim()) return;
+      
+      const q = STATE.questions[STATE.currentQuestionIndex];
+      const studentAnswer = input.value.trim();
+      const idx = STATE.currentQuestionIndex;
+      
+      // Disable the button and show loading
+      const btn = document.querySelector('.check-answer-btn');
+      btn.disabled = true;
+      btn.innerHTML = 'Even checken... <span class="spinner-small"></span>';
+      
+      const evalPrompt = `Een leerling (10-12 jaar) beantwoordde deze vraag:
+
+Vraag: ${q.question}
+Verwacht antwoord: ${q.answer}
+Belangrijke trefwoorden: ${(q.keywords || []).join(', ')}
+Antwoord van de leerling: ${studentAnswer}
+
+Beoordeel het antwoord. Antwoord ENKEL met valid JSON:
+
+{
+  "result": "correct | partially_correct | incorrect",
+  "feedback": "Korte, vriendelijke en bemoedigende feedback in 1-2 zinnen. Gebruik emoji's. Spreek het kind aan met 'je'.",
+  "correct_answer": "Het volledige correcte antwoord."
+}`;
+
+      try {
+        const response = await fetch('https://royal-base-ec59studybuddy-claude.djrien.workers.dev', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: STATE.model,
+            max_tokens: 1000,
+            system: 'Je bent een vriendelijke leerkracht voor kinderen van 10-12 jaar. Antwoord ENKEL met valid JSON.',
+            messages: [{ role: 'user', content: evalPrompt }]
+          })
+        });
+
+        if (!response.ok) throw new Error('API Error');
+
+        const data = await response.json();
+        let jsonStr = data.content[0].text.trim();
+        if (jsonStr.startsWith('```json')) jsonStr = jsonStr.substring(7);
+        if (jsonStr.startsWith('```')) jsonStr = jsonStr.substring(3);
+        if (jsonStr.endsWith('```')) jsonStr = jsonStr.substring(0, jsonStr.length - 3);
+        
+        let feedback;
+        try {
+          feedback = JSON.parse(jsonStr.trim());
+        } catch (parseErr) {
+          throw new Error('JSON parse failed');
+        }
+        
+        // Store feedback
+        if (!STATE.openFeedback) STATE.openFeedback = {};
+        STATE.openFeedback[idx] = feedback;
+        
+        // Mark as answered
+        const isCorrect = feedback.result === 'correct';
+        STATE.score.answered[idx] = isCorrect ? true : false;
+        if (isCorrect) STATE.score.correct++;
+        
+        renderQuestion();
+      } catch (e) {
+        alert("Oeps, er ging iets mis bij het controleren. Probeer opnieuw! 😅");
+        btn.disabled = false;
+        btn.innerHTML = 'Controleer antwoord ✓';
+      }
     }
 
     function nextQuestion() {
-      if(STATE.currentQuestionIndex < STATE.questions.length - 1) {
+      if (STATE.currentQuestionIndex < STATE.questions.length - 1) {
         STATE.currentQuestionIndex++;
-        renderQuiz();
+        renderQuestion();
       } else {
-        updateQuizProgress(); // Zorg dat de score klopt voor we de alert tonen
-        setTimeout(() => alert(`Einde van de quiz! Score: ${STATE.score.correct}/${STATE.questions.length}`), 300);
-      }
-    }
-    
-    function prevQuestion() {
-      if(STATE.currentQuestionIndex > 0) {
-        STATE.currentQuestionIndex--;
-        renderQuiz();
+        showScoreSummary();
       }
     }
 
-    function updateQuizProgress() {
-      document.getElementById('quiz-score-badge').innerText = `${STATE.score.correct}/${STATE.questions.length} goed`;
+    function showScoreSummary() {
+      const correct = STATE.score.correct;
+      const total = STATE.score.total;
+      const pct = correct / total;
       
+      document.getElementById('score-number').textContent = `${correct}/${total}`;
+      
+      const circle = document.getElementById('score-circle');
+      circle.className = 'score-circle';
+      
+      let emoji, message;
+      if (pct >= 0.8) {
+        circle.classList.add('great');
+        emoji = '🎉';
+        message = 'Fantastisch gedaan! Je bent een ster! ⭐';
+      } else if (pct >= 0.5) {
+        circle.classList.add('okay');
+        emoji = '💪';
+        message = 'Goed bezig! Blijf oefenen! 📚';
+      } else {
+        circle.classList.add('needs-work');
+        emoji = '📖';
+        message = 'Niet erg! Probeer het nog eens, je kan het! 💪';
+      }
+      
+      document.getElementById('score-emoji').textContent = emoji;
+      document.getElementById('score-message').textContent = message;
+      
+      navigateTo('screen-score');
+    }
+
+    function updateProgressDots() {
       const dotsContainer = document.getElementById('quiz-progress-dots');
       dotsContainer.innerHTML = '';
-      for(let i=0; i<STATE.questions.length; i++) {
+      for (let i = 0; i < STATE.questions.length; i++) {
         const dot = document.createElement('div');
         dot.className = 'dot';
-        if(i === STATE.currentQuestionIndex) dot.classList.add('active');
-        if(STATE.score.answered[i] === true) dot.classList.add('correct');
-        if(STATE.score.answered[i] === false) dot.classList.add('wrong');
+        if (i === STATE.currentQuestionIndex) dot.classList.add('active');
+        const ans = STATE.score.answered[i];
+        if (ans === true || (typeof ans === 'number' && STATE.questions[i].correct === ans)) dot.classList.add('correct');
+        else if (ans !== null && ans !== undefined) dot.classList.add('wrong');
         dotsContainer.appendChild(dot);
       }
     }
 
     // ---------------------------------------------------------------- //
-    // HUISWERK LOGICA
+    // HOMEWORK
     // ---------------------------------------------------------------- //
     function renderHomework() {
       const container = document.getElementById('homework-cards-container');
@@ -750,12 +891,11 @@ ${STATE.mode === 'toets' ? `Maak exact ${STATE.questionCount} oefenvragen op bas
       
       STATE.homeworkFeedback.forEach(item => {
         let badge = '', cls = '';
-        if(item.status === 'correct') { badge = '✅ Goed'; cls = 'hw-correct'; correctCount++; }
+        if (item.status === 'correct') { badge = '✅ Goed'; cls = 'hw-correct'; correctCount++; }
         else if (item.status === 'bijna_correct') { badge = '⚠️ Bijna goed'; cls = 'hw-bijna_correct'; }
         else { badge = '❌ Fout'; cls = 'hw-fout'; }
         
-        html += `
-        <div class="hw-card ${cls}">
+        html += `<div class="hw-card ${cls}">
           <div class="hw-badge">${badge}</div>
           <div class="hw-section"><strong>Opdracht:</strong> ${item.opdracht}</div>
           <div class="hw-section"><strong>Jouw antwoord:</strong> ${item.antwoord_leerling}</div>
@@ -768,18 +908,17 @@ ${STATE.mode === 'toets' ? `Maak exact ${STATE.questionCount} oefenvragen op bas
     }
 
     // ---------------------------------------------------------------- //
-    // WEB SPEECH API
+    // SPEECH-TO-TEXT (Generic, targets any input)
     // ---------------------------------------------------------------- //
-    function openSpeechModal() {
+    function openSpeechModal(targetInputId) {
+      if (!hasSpeechAPI) return;
+      
+      STATE.speechTargetId = targetInputId;
       const modal = document.getElementById('speechModal');
       modal.classList.add('active');
+      document.getElementById('speechLiveText').textContent = 'Spreek nu...';
       
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (!SpeechRecognition) {
-        document.getElementById('speechLiveText').textContent = 'Spraakherkenning niet beschikbaar in deze browser.';
-        return;
-      }
-      
       const recognition = new SpeechRecognition();
       const langMap = { nl: 'nl-BE', fr: 'fr-BE', en: 'en-GB' };
       recognition.lang = langMap[STATE.lang] || 'nl-BE';
@@ -794,7 +933,7 @@ ${STATE.mode === 'toets' ? `Maak exact ${STATE.questionCount} oefenvragen op bas
           if (event.results[i].isFinal) finalTranscript += event.results[i][0].transcript + ' ';
           else interim += event.results[i][0].transcript;
         }
-        document.getElementById('speechLiveText').textContent = finalTranscript + interim;
+        document.getElementById('speechLiveText').textContent = finalTranscript + interim || 'Spreek nu...';
       };
       
       recognition.onerror = () => {
@@ -806,17 +945,25 @@ ${STATE.mode === 'toets' ? `Maak exact ${STATE.questionCount} oefenvragen op bas
     }
 
     function closeSpeechModal() {
-      if (STATE.recognition) STATE.recognition.stop();
-      const transcript = document.getElementById('speechLiveText').textContent.trim();
-      const input = document.getElementById('openAnswerInput');
-      if (input && transcript && !transcript.startsWith('Spreek je') && !transcript.startsWith('Fout')) {
-        input.value = transcript;
+      if (STATE.recognition) {
+        try { STATE.recognition.stop(); } catch(e) {}
       }
+      const transcript = document.getElementById('speechLiveText').textContent.trim();
+      const target = STATE.speechTargetId ? document.getElementById(STATE.speechTargetId) : null;
+      
+      if (target && transcript && !transcript.startsWith('Spreek nu') && !transcript.startsWith('Fout')) {
+        target.value = transcript;
+        // Trigger input event for any listeners
+        target.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+      
       document.getElementById('speechModal').classList.remove('active');
-      document.getElementById('speechLiveText').textContent = 'Spreek je antwoord in...';
+      document.getElementById('speechLiveText').textContent = 'Spreek nu...';
+      STATE.speechTargetId = null;
     }
 
     document.addEventListener('DOMContentLoaded', init);
   </script>
 </body>
 </html>
+
