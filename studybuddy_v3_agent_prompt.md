@@ -18,7 +18,6 @@ De app heeft twee functies:
 - Google Fonts: Nunito (body) + Quicksand (headings)
 - Azure Computer Vision Read API voor OCR
   - Endpoint: https://huiswerk-ocr-vision.cognitiveservices.azure.com/
-  - API Key: QYQfDL8xWMfT6HaqmdtHRo01GktrYC4o6O45rPXvvtNhe16ok2F9JQQJ99CCAC5RqLJXJ3w3AAAFACOG9cWF
   - API call: POST naar {endpoint}computervision/imageanalysis:analyze?api-version=2024-02-01&features=read
   - Header: Ocp-Apim-Subscription-Key: {key}
   - De ruwe tekst uit het response pad: result.readResult.content
